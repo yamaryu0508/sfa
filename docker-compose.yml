@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  python:
+    build: ./python
+    volumes:
+      - ./python:/code
+    expose:
+      - "3031"
+    container_name: python
+    environment:
+      MYSQL_DATABASE: sfa
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+      DATABASE_CONTAINER_NAME: db
+      DATABASE_PORT: "3306"
+      LANGUAGE: "en-us"
+      TIME_ZONE: "America/Los_Angeles"
+    depends_on:
+      - db
+  
+  nginx:
+    build: ./nginx
+    ports:
+      - "8000:8000"
+    container_name: nginx
+    restart: always
+    links:
+      - python
+    depends_on:
+      - python
+
+  db:
+    build: ./mysql
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: sfa
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+      TZ: "America/Los_Angeles"

@@ -1,0 +1,25 @@
+{% load bootstrap4 %}
+<html>
+    <head>
+        {% bootstrap_css %}
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
+                <a href="{% url 'salespipeline:search' %}">
+                    <button class="btn btn-outline-secondary" type="button">Sales Deal List</button>
+                </a>
+            </form>
+        </nav>
+ 
+        <div class="container">
+            <form action="{% url 'salespipeline:regist' %}" method="POST" class="form">
+                {% csrf_token %}
+                <input type="hidden" name="salespipeline_id" value="{{ salespipeline_id }}"/>
+                {% bootstrap_form form %}
+                <button type="submit" class="btn btn-primary">Add/Update</button>
+            </form>
+        </div>
+    </body>
+</html>
+ 

@@ -1,0 +1,41 @@
+{% load bootstrap4 %}
+<html>
+    <head>
+        {% bootstrap_css %}
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
+                <a href="{% url 'salespipeline:edit' '0' %}">
+                    <button class="btn btn-outline-dark" type="button">Add New Deal</button>
+                </a>
+            </form>
+        </nav>
+ 
+        <div class="container">
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Updated date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in list %}
+                    <tr>
+                        <th scope="row">
+                            <a href="{% url 'salespipeline:edit' t.salespipeline_id %}" >
+                                {{ t.salespipeline_id }}
+                            </a>
+                        </th>
+                        <td>{{ t.title }}</td>
+                        <td>{{ t.update_date|date:"m/d/Y" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
+ 
